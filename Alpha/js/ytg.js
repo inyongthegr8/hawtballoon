@@ -15,11 +15,11 @@ function holdMe(e) {
 	}
 	if(e.keyCode == 65){
 		// A
-		cube.position.x -= speed;
+		moveLeft();
 	}
 	if(e.keyCode == 68){
 		// D
-		cube.position.x += speed;
+		moveRight();
 	}
 	if(e.keyCode == 38){
 		// up btn
@@ -32,4 +32,24 @@ function holdMe(e) {
 }
 
 function releaseMe(e) {
+}
+
+function moveRight()
+{
+	balloon.position.x += speed;
+	holder.position.x += speed;
+	string1.position.x += speed;
+	string2.position.x += speed;
+	string3.position.x += speed;
+	string4.position.x += speed;
+}
+
+function moveLeft()
+{
+	balloon.position.x -= speed;
+	holder.position.x -= speed;
+	string1.position.x -= speed;
+	string2.position.x -= speed;
+	string3.position.x -= speed;
+	string4.position.x -= speed;
 }

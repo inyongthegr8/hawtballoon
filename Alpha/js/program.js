@@ -1,9 +1,23 @@
+// alex hotballoon
+
 var balloonMeshPath = 'assets/mesh/hotair/hot-air.json';
 var holderMeshPath = 'assets/mesh/hotair/holder.json';
 var	string1MeshPath = 'assets/mesh/hotair/string1.json';
 var string2MeshPath = 'assets/mesh/hotair/string2.json';
 var string3MeshPath = 'assets/mesh/hotair/string3.json';
 var string4MeshPath = 'assets/mesh/hotair/string4.json';
+
+// yong jetplane
+
+var jetplaneMeshPath = 'assets/mesh/enemies/jetplane/jetplane.json';
+
+// yong barbwire
+
+var barbwireMeshPath = 'assets/mesh/enemies/barbwire/barbwire.json';
+
+// yong electricwire
+
+var electricwireMeshPath = 'assets/mesh/enemies/electricwire/electricwire.json';
 
 var scene = null;
 var camera = null;
@@ -19,6 +33,12 @@ var string1 = null;
 var string2 = null;
 var string3 = null;
 var string4 = null;
+
+// enemies meshes
+
+var jetplane = null;
+var barbwire = null;
+var electricwire = null;
 
 function initialize()
 {
@@ -71,7 +91,29 @@ function initializeMesh()
     scene.add(string4);
   });
 
-  camera.position.z = 13;
+  loader.load(jetplaneMeshPath, function(geometry, materials) 
+  {
+    jetplane = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(jetplane);
+  });
+
+
+  loader.load(barbwireMeshPath, function(geometry, materials) 
+  {
+    barbwire = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(barbwire);
+    barbwire.rotation.y = -0.5 * Math.PI;
+    barbwire.position.z = -15;
+  });
+
+  loader.load(electricwireMeshPath, function(geometry, materials) 
+  {
+    electricwire = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(electricwire);
+    electricwire.rotation.y = -0.5 * Math.PI;
+  });
+
+  camera.position.z = 10;
 
   var light = new THREE.AmbientLight(0xffffff);
   scene.add(light);
@@ -79,7 +121,6 @@ function initializeMesh()
 
 function render()
 {
-
 	if (scene != null)
 	{
 		if (camera != null)
@@ -93,20 +134,10 @@ function render()
 	}
 }
 
-function startThreeJS()
-{
-	initialize();
-	initializeMesh();
-	render();
-	moveMesh();
-}
-
 function moveMesh()
 {
 	document.addEventListener('keydown', function(event) 
   {
-  	//left key
-
     if(event.keyCode == 37) 
     {
       balloon.position.x -= speed;
@@ -116,8 +147,7 @@ function moveMesh()
 		  string3.position.x -= speed;
 	  	string4.position.x -= speed;
     }
-  	
-  	//right key
+  
     else if(event.keyCode == 39) 
     {
       balloon.position.x += speed;
@@ -127,33 +157,11 @@ function moveMesh()
 		  string3.position.x += speed;
 		  string4.position.x += speed;
     }
-
-    //A key
-    else if (event.keyCode == 65)
-    {
-    	balloon.position.x -= speed;
-	    holder.position.x -= speed;
-	    string1.position.x -= speed;
-	    string2.position.x -= speed;
-		  string3.position.x -= speed;
-	  	string4.position.x -= speed;
-    }
-
-    //D Key
-
-    else if (event.keyCode == 68)
-    {
-    	if (balloon.position.x != screen.innerWidth)
-    	{
-    		balloon.position.x += speed;
-	    	holder.position.x += speed;
-	    	string1.position.x += speed;
-	    	string2.position.x += speed;
-		  	string3.position.x += speed;
-	  		string4.position.x += speed;
-    	}    	
-    }
   });
 }
 
-startThreeJS();
+initialize();
+initializeMesh();
+render();
+moveMesh();
+

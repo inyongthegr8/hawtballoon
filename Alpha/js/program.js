@@ -14,18 +14,13 @@ var speed = 0.08;
 //hot air balloon mesh
 
 var balloon = null;
-var holder = null
-var string1 = null;
-var string2 = null;
-var string3 = null;
-var string4 = null;
 
 function initialize()
 {
   scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
 
-	renderer = new THREE.WebGLRenderer({alpha: true});
+	renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 }
@@ -39,36 +34,6 @@ function initializeMesh()
 	{
     balloon = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
     scene.add(balloon);
-  });
-
-  loader.load(holderMeshPath, function(geometry, materials)
-  {
-    holder = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(holder);
-  });
-
-  loader.load(string1MeshPath, function(geometry, materials) 
-  {
-    string1 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(string1);
-  });
-
-  loader.load(string2MeshPath, function(geometry, materials) 
-  {
-    string2 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(string2);
-  });
-
-  loader.load(string3MeshPath, function(geometry, materials) 
-  {
-    string3 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(string3);
-  });
-
-  loader.load(string4MeshPath, function(geometry, materials) 
-  {
-    string4 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(string4);
   });
 
   camera.position.z = 13;
@@ -110,33 +75,18 @@ function moveMesh()
     if(event.keyCode == 37) 
     {
       balloon.position.x -= speed;
-	    holder.position.x -= speed;
-	    string1.position.x -= speed;
-	    string2.position.x -= speed;
-		  string3.position.x -= speed;
-	  	string4.position.x -= speed;
     }
   	
   	//right key
     else if(event.keyCode == 39) 
     {
       balloon.position.x += speed;
-	    holder.position.x += speed;
-	    string1.position.x += speed;
-	    string2.position.x += speed;
-		  string3.position.x += speed;
-		  string4.position.x += speed;
     }
 
     //A key
     else if (event.keyCode == 65)
     {
     	balloon.position.x -= speed;
-	    holder.position.x -= speed;
-	    string1.position.x -= speed;
-	    string2.position.x -= speed;
-		  string3.position.x -= speed;
-	  	string4.position.x -= speed;
     }
 
     //D Key
@@ -146,11 +96,6 @@ function moveMesh()
     	if (balloon.position.x != screen.innerWidth)
     	{
     		balloon.position.x += speed;
-	    	holder.position.x += speed;
-	    	string1.position.x += speed;
-	    	string2.position.x += speed;
-		  	string3.position.x += speed;
-	  		string4.position.x += speed;
     	}    	
     }
   });

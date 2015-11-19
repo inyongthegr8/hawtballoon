@@ -1,11 +1,6 @@
 // alex hotballoon
 
 var balloonMeshPath = 'assets/mesh/hotair/hot-air.json';
-var holderMeshPath = 'assets/mesh/hotair/holder.json';
-var	string1MeshPath = 'assets/mesh/hotair/string1.json';
-var string2MeshPath = 'assets/mesh/hotair/string2.json';
-var string3MeshPath = 'assets/mesh/hotair/string3.json';
-var string4MeshPath = 'assets/mesh/hotair/string4.json';
 
 // yong jetplane
 
@@ -56,45 +51,11 @@ function initializeMesh()
     scene.add(balloon);
   });
 
-<<<<<<< HEAD
-  camera.position.z = 13;
-=======
-  loader.load(holderMeshPath, function(geometry, materials)
-  {
-    holder = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(holder);
-  });
-
-  loader.load(string1MeshPath, function(geometry, materials) 
-  {
-    string1 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(string1);
-  });
-
-  loader.load(string2MeshPath, function(geometry, materials) 
-  {
-    string2 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(string2);
-  });
-
-  loader.load(string3MeshPath, function(geometry, materials) 
-  {
-    string3 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(string3);
-  });
-
-  loader.load(string4MeshPath, function(geometry, materials) 
-  {
-    string4 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    scene.add(string4);
-  });
-
   loader.load(jetplaneMeshPath, function(geometry, materials) 
   {
     jetplane = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
     scene.add(jetplane);
   });
-
 
   loader.load(barbwireMeshPath, function(geometry, materials) 
   {
@@ -111,8 +72,7 @@ function initializeMesh()
     electricwire.rotation.y = -0.5 * Math.PI;
   });
 
-  camera.position.z = 10;
->>>>>>> origin/master
+  camera.position.z = 13;
 
   var light = new THREE.AmbientLight(0xffffff);
   scene.add(light);
@@ -146,7 +106,6 @@ function moveMesh()
     {
       balloon.position.x += speed;
     }
-<<<<<<< HEAD
 
     //A key
     else if (event.keyCode == 65)
@@ -163,13 +122,16 @@ function moveMesh()
     		balloon.position.x += speed;
     	}    	
     }
-=======
->>>>>>> origin/master
   });
 }
 
-initialize();
-initializeMesh();
-render();
-moveMesh();
+function startProgram()
+{
+  initialize();
+  initializeMesh();
+  render();
+  moveMesh();
+}
+
+startProgram();
 

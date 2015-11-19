@@ -1,9 +1,23 @@
+// alex hotballoon
+
 var balloonMeshPath = 'assets/mesh/hotair/hot-air.json';
 var holderMeshPath = 'assets/mesh/hotair/holder.json';
 var	string1MeshPath = 'assets/mesh/hotair/string1.json';
 var string2MeshPath = 'assets/mesh/hotair/string2.json';
 var string3MeshPath = 'assets/mesh/hotair/string3.json';
 var string4MeshPath = 'assets/mesh/hotair/string4.json';
+
+// yong jetplane
+
+var jetplaneMeshPath = 'assets/mesh/enemies/jetplane/jetplane.json';
+
+// yong barbwire
+
+var barbwireMeshPath = 'assets/mesh/enemies/barbwire/barbwire.json';
+
+// yong electricwire
+
+var electricwireMeshPath = 'assets/mesh/enemies/electricwire/electricwire.json';
 
 var scene = null;
 var camera = null;
@@ -14,6 +28,12 @@ var speed = 0.08;
 //hot air balloon mesh
 
 var balloon = null;
+
+// enemies meshes
+
+var jetplane = null;
+var barbwire = null;
+var electricwire = null;
 
 function initialize()
 {
@@ -36,7 +56,63 @@ function initializeMesh()
     scene.add(balloon);
   });
 
+<<<<<<< HEAD
   camera.position.z = 13;
+=======
+  loader.load(holderMeshPath, function(geometry, materials)
+  {
+    holder = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(holder);
+  });
+
+  loader.load(string1MeshPath, function(geometry, materials) 
+  {
+    string1 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(string1);
+  });
+
+  loader.load(string2MeshPath, function(geometry, materials) 
+  {
+    string2 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(string2);
+  });
+
+  loader.load(string3MeshPath, function(geometry, materials) 
+  {
+    string3 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(string3);
+  });
+
+  loader.load(string4MeshPath, function(geometry, materials) 
+  {
+    string4 = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(string4);
+  });
+
+  loader.load(jetplaneMeshPath, function(geometry, materials) 
+  {
+    jetplane = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(jetplane);
+  });
+
+
+  loader.load(barbwireMeshPath, function(geometry, materials) 
+  {
+    barbwire = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(barbwire);
+    barbwire.rotation.y = -0.5 * Math.PI;
+    barbwire.position.z = -15;
+  });
+
+  loader.load(electricwireMeshPath, function(geometry, materials) 
+  {
+    electricwire = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(electricwire);
+    electricwire.rotation.y = -0.5 * Math.PI;
+  });
+
+  camera.position.z = 10;
+>>>>>>> origin/master
 
   var light = new THREE.AmbientLight(0xffffff);
   scene.add(light);
@@ -44,7 +120,6 @@ function initializeMesh()
 
 function render()
 {
-
 	if (scene != null)
 	{
 		if (camera != null)
@@ -58,30 +133,20 @@ function render()
 	}
 }
 
-function startThreeJS()
-{
-	initialize();
-	initializeMesh();
-	render();
-	moveMesh();
-}
-
 function moveMesh()
 {
 	document.addEventListener('keydown', function(event) 
   {
-  	//left key
-
     if(event.keyCode == 37) 
     {
       balloon.position.x -= speed;
     }
-  	
-  	//right key
+  
     else if(event.keyCode == 39) 
     {
       balloon.position.x += speed;
     }
+<<<<<<< HEAD
 
     //A key
     else if (event.keyCode == 65)
@@ -98,7 +163,13 @@ function moveMesh()
     		balloon.position.x += speed;
     	}    	
     }
+=======
+>>>>>>> origin/master
   });
 }
 
-startThreeJS();
+initialize();
+initializeMesh();
+render();
+moveMesh();
+

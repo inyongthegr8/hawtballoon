@@ -35,7 +35,7 @@ function initialize()
   scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
 
-	renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 }
@@ -57,7 +57,7 @@ function initializeMesh()
     scene.add(jetplane);
   });
 
-  loader.load(barbwireMeshPath, function(geometry, materials) 
+  /*loader.load(barbwireMeshPath, function(geometry, materials) 
   {
     barbwire = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
     scene.add(barbwire);
@@ -70,12 +70,30 @@ function initializeMesh()
     electricwire = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
     scene.add(electricwire);
     electricwire.rotation.y = -0.5 * Math.PI;
-  });
+  });*/
 
   camera.position.z = 13;
 
+  
+}
+
+function lightsController()
+{
   var light = new THREE.AmbientLight(0xffffff);
+  //var hemiLight = new THREE.HemisphereLight( 0x0000ff, 0x00ff00, 0.6 ); 
   scene.add(light);
+  //scene.add(hemiLight);
+
+  var pointLight =
+  new THREE.PointLight(0xFFFFFF);
+
+// set its position
+  pointLight.position.x = 10;
+  pointLight.position.y = 50;
+  pointLight.position.z = 130;
+
+// add to the scene
+  scene.add(pointLight);
 }
 
 function render()
@@ -87,6 +105,8 @@ function render()
 			if (renderer != null)
 			{
 				requestAnimationFrame( render );
+        var controls = new THREE.TrackballControls( camera );
+        controls.target.set( 0, 0, 0 )
 				renderer.render(scene, camera);
 			}
 		}
@@ -95,11 +115,13 @@ function render()
 
 function moveMesh()
 {
+
 	document.addEventListener('keydown', function(event) 
   {
     if(event.keyCode == 37) 
     {
       balloon.position.x -= speed;
+
     }
   
     else if(event.keyCode == 39) 
@@ -129,8 +151,10 @@ function startProgram()
 {
   initialize();
   initializeMesh();
+  lightsController();
   render();
   moveMesh();
+
 }
 
 startProgram();

@@ -14,6 +14,10 @@ var barbwireMeshPath = 'assets/mesh/enemies/barbwire/barbwire.json';
 
 var electricwireMeshPath = 'assets/mesh/enemies/electricwire/electricwire.json';
 
+// background for land
+
+var citylandMeshPath = 'assets/mesh/detail/cityland.json';
+
 var scene = null;
 var camera = null;
 var renderer = null;
@@ -29,6 +33,10 @@ var balloon = null;
 var jetplane = null;
 var barbwire = null;
 var electricwire = null;
+
+// detail meshes
+
+var cityland = null;
 
 function initialize()
 {
@@ -72,6 +80,15 @@ function initializeMesh()
     electricwire.rotation.y = -0.5 * Math.PI;
   });*/
 
+  loader.load(citylandMeshPath, function(geometry, materials) 
+  {
+    cityland = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    scene.add(cityland);
+    cityland.position.y = -10;
+    cityland.scale.set(5,5,1);
+    cityland.position.z = -10
+  });
+  
   camera.position.z = 13;
 
   
@@ -105,8 +122,8 @@ function render()
 			if (renderer != null)
 			{
 				requestAnimationFrame( render );
-        var controls = new THREE.TrackballControls( camera );
-        controls.target.set( 0, 0, 0 )
+        // var controls = new THREE.TrackballControls( camera );
+        // controls.target.set( 0, 0, 0 )
 				renderer.render(scene, camera);
 			}
 		}

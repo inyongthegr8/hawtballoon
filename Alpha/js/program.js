@@ -35,7 +35,7 @@ function initialize()
   scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
 
-	renderer = new THREE.WebGLRenderer({antialias: true});
+	renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 }
@@ -54,6 +54,7 @@ function initializeMesh()
   loader.load(jetplaneMeshPath, function(geometry, materials) 
   {
     jetplane = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    jetplane.scale.set(0.2, 0.2, 0.2);
     scene.add(jetplane);
   });
 
@@ -73,8 +74,6 @@ function initializeMesh()
   });*/
 
   camera.position.z = 13;
-
-  
 }
 
 function lightsController()
@@ -105,8 +104,8 @@ function render()
 			if (renderer != null)
 			{
 				requestAnimationFrame( render );
-        var controls = new THREE.TrackballControls( camera );
-        controls.target.set( 0, 0, 0 )
+        //var controls = new THREE.TrackballControls( camera );
+        //controls.target.set( 0, 0, 0 )
 				renderer.render(scene, camera);
 			}
 		}
@@ -121,7 +120,6 @@ function moveMesh()
     if(event.keyCode == 37) 
     {
       balloon.position.x -= speed;
-
     }
   
     else if(event.keyCode == 39) 

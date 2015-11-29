@@ -16,13 +16,13 @@ var electricwireMeshPath = 'assets/mesh/enemies/electricwire/electricwire.json';
 
 // background for land
 
-var citylandMeshPath = 'assets/mesh/detail/cityland.json';
+var citylandMeshPath = 'assets/mesh/detail/forestbg.json';
 
 var scene = null;
 var camera = null;
 var renderer = null;
 
-var speed = 0.08;
+var speed = 0.0008;
 
 //hot air balloon mesh
 
@@ -43,7 +43,7 @@ function initialize()
   scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
 
-	renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 }
@@ -62,7 +62,7 @@ function initializeMesh()
   loader.load(jetplaneMeshPath, function(geometry, materials) 
   {
     jetplane = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    jetplane.scale.set(0.2, 0.2, 0.2);
+    jetplane.scale.set(0.01, 0.01, 0.01);
     scene.add(jetplane);
   });
 
@@ -121,6 +121,14 @@ function render()
 			if (renderer != null)
 			{
 				requestAnimationFrame( render );
+        moveMesh();
+
+        if (jetplane.scale.x < 0.300)
+        {
+          jetplane.scale.x += 0.001;
+          jetplane.scale.y += 0.001;
+          jetplane.scale.z += 0.001;
+        }
 
 				renderer.render(scene, camera);
 			}
@@ -161,14 +169,18 @@ function moveMesh()
   });
 }
 
+function removeEntity(object) 
+{
+    var selectedObject = scene.getObjectByName(object.name);
+    scene.remove( selectedObject );
+}
+
 function startProgram()
 {
   initialize();
   initializeMesh();
   lightsController();
   render();
-  moveMesh();
-
 }
 
 startProgram();

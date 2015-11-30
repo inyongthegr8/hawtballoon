@@ -25,6 +25,10 @@ var controls = null;
 
 var speed = 0.0008;
 
+// detail_forest
+var forestbgPath = 'assets/mesh/detail/forestbg.json';
+var forestbg = null;
+
 //hot air balloon mesh
 
 var balloon = null;
@@ -34,6 +38,25 @@ var balloon = null;
 var jetplane = null;
 var barbwire = null;
 var electricwire = null;
+
+// Enemy LIMIT
+var loader = new THREE.JSONLoader();
+var eNum = 0;
+var eList = [];
+var eAppearanceRate = 500; // 1000 ms = 1 sec
+var eSpeed = 0.85; // speed of the enemies after its initial respawn going towards the player
+var eRespawn = function() {
+	loader.load(jetplaneMeshPath, function(geometry, materials) 
+	{
+		newEnt = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+		newEnt.position.x = Math.floor((Math.random() * 50) + 1) - Math.floor((Math.random() * 30) + 1)
+		newEnt.position.z = -50
+		eList.push(newEnt);
+		scene.add(newEnt);
+		console.log("NEW ENTITY " + eNum + ": " + newEnt.position.x + "");
+		eNum++;
+	});
+};
 
 // detail meshes
 
@@ -58,14 +81,21 @@ function initialize()
 // all mesh should be initialized here
 function initializeMesh()
 {
-	var loader = new THREE.JSONLoader();
 
 	loader.load(balloonMeshPath, function(geometry, materials) 
 	{
     balloon = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
     scene.add(balloon);
   });
-
+	loader.load(forestbgPath, function(geometry, materials) 
+	{
+		forestbg = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+		// selectedbg = forestbg;
+		forestbg.position.set(0, -33, 100);
+		forestbg.scale.set(100, 100, 100);
+		scene.add(forestbg);
+	});
+  /*
   loader.load(jetplaneMeshPath, function(geometry, materials) 
   {
     jetplane = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
@@ -73,8 +103,8 @@ function initializeMesh()
     jetplane.position.z = -50;
     scene.add(jetplane);
   });
-
-  /*loader.load(barbwireMeshPath, function(geometry, materials) 
+  
+  loader.load(barbwireMeshPath, function(geometry, materials) 
   {
     barbwire = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
     scene.add(barbwire);
@@ -129,12 +159,14 @@ function render()
 			{
 				requestAnimationFrame( render );
         moveMesh();
-
+				moveEnemies();
+				scrollBG();
+/*
         if (jetplane.position.z < 4)
         {
           jetplane.position.z += 0.21;
         }
-        
+*/      
 
 				renderer.render(scene, camera);
 			}
@@ -175,6 +207,31 @@ function moveMesh()
   });
 }
 
+function respawn()
+{
+	setInterval( eRespawn, eAppearanceRate );
+}
+
+function moveEnemies()
+{
+	for(var i = 0; i < eList.length; i++)
+	{
+		eList[i].position.z += eSpeed;
+		// console.log("NEW ENTITY " + i + ": " + eList[i].position.z + "");
+		if(eList[i].position.z > 50){
+			scene.remove(eList[i]);
+			eList.splice(i, 1)
+		}
+	}
+}
+
+function scrollBG(){
+	forestbg.position.z -= 5
+	if(forestbg.position.z <= -500){
+		forestbg.position.z = 100;
+	}
+}
+
 function removeEntity(object) 
 {
     var selectedObject = scene.getObjectByName(object.name);
@@ -186,6 +243,7 @@ function startProgram()
   initialize();
   initializeMesh();
   lightsController();
+  respawn();
   render();
 }
 

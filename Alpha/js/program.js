@@ -43,7 +43,7 @@ function initialize()
   scene = new THREE.Scene();
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
 
-	renderer = new THREE.WebGLRenderer({antialias: false});
+	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
 }
@@ -62,7 +62,8 @@ function initializeMesh()
   loader.load(jetplaneMeshPath, function(geometry, materials) 
   {
     jetplane = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
-    jetplane.scale.set(0.01, 0.01, 0.01);
+    jetplane.scale.set(0.2, 0.2, 0.2);
+    jetplane.position.z = -50;
     scene.add(jetplane);
   });
 
@@ -81,14 +82,14 @@ function initializeMesh()
     electricwire.rotation.y = -0.5 * Math.PI;
   });*/
 
-  loader.load(citylandMeshPath, function(geometry, materials) 
+  /*loader.load(citylandMeshPath, function(geometry, materials) 
   {
     cityland = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
     scene.add(cityland);
     cityland.position.y = -10;
     cityland.scale.set(5,5,1);
     cityland.position.z = -10
-  });
+  });*/
   
   camera.position.z = 13;
 }
@@ -96,9 +97,9 @@ function initializeMesh()
 function lightsController()
 {
   var light = new THREE.AmbientLight(0xffffff);
-  //var hemiLight = new THREE.HemisphereLight( 0x0000ff, 0x00ff00, 0.6 ); 
+  var hemiLight = new THREE.HemisphereLight( 0x0000ff, 0x00ff00, 0.6 ); 
   scene.add(light);
-  //scene.add(hemiLight);
+  scene.add(hemiLight);
 
   var pointLight =
   new THREE.PointLight(0xFFFFFF);
@@ -123,12 +124,11 @@ function render()
 				requestAnimationFrame( render );
         moveMesh();
 
-        if (jetplane.scale.x < 0.300)
+        if (jetplane.position.z < 4)
         {
-          jetplane.scale.x += 0.001;
-          jetplane.scale.y += 0.001;
-          jetplane.scale.z += 0.001;
+          jetplane.position.z += 0.21;
         }
+        
 
 				renderer.render(scene, camera);
 			}

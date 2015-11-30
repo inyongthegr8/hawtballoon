@@ -21,6 +21,7 @@ var citylandMeshPath = 'assets/mesh/detail/forestbg.json';
 var scene = null;
 var camera = null;
 var renderer = null;
+var controls = null;
 
 var speed = 0.0008;
 
@@ -45,6 +46,12 @@ function initialize()
 
 	renderer = new THREE.WebGLRenderer({antialias: true});
 	renderer.setSize( window.innerWidth, window.innerHeight );
+  controls = new THREE.OrbitControls( camera );
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.25;
+  controls.enableZoom = true;
+  controls.enableKeys = false;
+  //controls.addEventListener( 'change', render );
 	document.body.appendChild( renderer.domElement );
 }
 
@@ -101,8 +108,7 @@ function lightsController()
   scene.add(light);
   scene.add(hemiLight);
 
-  var pointLight =
-  new THREE.PointLight(0xFFFFFF);
+  var pointLight = new THREE.PointLight(0xFFFFFF);
 
 // set its position
   pointLight.position.x = 10;
